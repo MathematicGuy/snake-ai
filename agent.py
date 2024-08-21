@@ -13,7 +13,7 @@ MAX_MEMORY = 100_000
 BATCH_SIZE = 1000
 LR = 0.001
 SPEED = 20000  # Increase the frame rate
-INPUT_SIZE = 16
+INPUT_SIZE = 12
 HIDDEN_SIZE = 255
 OUTPUT_SIZE = 3
 
@@ -115,10 +115,10 @@ class Agent:
             game.food.y < game.head.y,  # food down
 
             # Potential traps (future collision if snake moves in this direction)
-            game.is_collision(Point(head.x + 2 * BLOCK_SIZE, head.y)) if dir_r else 0,
-            game.is_collision(Point(head.x - 2 * BLOCK_SIZE, head.y)) if dir_l else 0,
-            game.is_collision(Point(head.x, head.y - 2 * BLOCK_SIZE)) if dir_u else 0,
-            game.is_collision(Point(head.x, head.y + 2 * BLOCK_SIZE)) if dir_d else 0
+            # game.is_collision(Point(head.x + 2 * BLOCK_SIZE, head.y)) if dir_r else 0,
+            # game.is_collision(Point(head.x - 2 * BLOCK_SIZE, head.y)) if dir_l else 0,
+            # game.is_collision(Point(head.x, head.y - 2 * BLOCK_SIZE)) if dir_u else 0,
+            # game.is_collision(Point(head.x, head.y + 2 * BLOCK_SIZE)) if dir_d else 0
         ]
 
         return np.array(state, dtype=int)  # Turn State (True or False boolean) into 0 and 1
@@ -186,12 +186,12 @@ class Agent:
             move = torch.argmax(prediction).item()
 
             # Prevent moves leading to dead ends
-            if state[0] and move == 0:  # Danger straight
-                move = random.choice([1, 2])
-            elif state[1] and move == 1:  # Danger right
-                move = random.choice([0, 2])
-            elif state[2] and move == 2:  # Danger left
-                move = random.choice([0, 1])
+            # if state[0] and move == 0:  # Danger straight
+            #     move = random.choice([1, 2])
+            # elif state[1] and move == 1:  # Danger right
+            #     move = random.choice([0, 2])
+            # elif state[2] and move == 2:  # Danger left
+            #     move = random.choice([0, 1])
 
             final_move[move] = 1
 
